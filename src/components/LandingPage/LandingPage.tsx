@@ -1,8 +1,11 @@
-// src/components/LandingPage/LandingPage.tsx
 import React, { useEffect } from 'react';
 import './LandingPage.css'; // Importa estilos específicos do componente
 
-const LandingPage: React.FC = () => {
+interface LandingPageProps {
+  onNavigate: () => void;
+}
+
+const LandingPage: React.FC<LandingPageProps> = ({ onNavigate }) => {
   useEffect(() => {
     // Handler do efeito ripple
     const handleRippleEffect = function (this: HTMLElement, e: MouseEvent) {
@@ -43,6 +46,13 @@ const LandingPage: React.FC = () => {
       if (exploreButton) exploreButton.removeEventListener('click', handleExploreClick);
     };
   }, []);
+
+  const handleNavigationClick = (event: React.MouseEvent<HTMLElement>) => {
+    if (event.currentTarget.tagName === 'A') {
+        event.preventDefault();
+    }
+    onNavigate();
+  };
 
   return (
     <>
@@ -88,7 +98,7 @@ const LandingPage: React.FC = () => {
             <span className="brand-text">StreamerTools</span>
           </div>
           <div className="nav-actions">
-            <a href="#" className="nav-cta">
+            <a href="#" className="nav-cta" onClick={handleNavigationClick}>
               Começar Agora
             </a>
           </div>
@@ -113,7 +123,7 @@ const LandingPage: React.FC = () => {
             </p>
 
             <div className="hero-actions">
-              <button className="action-primary">
+              <button className="action-primary" onClick={handleNavigationClick}>
                 <svg className="btn-icon" viewBox="0 0 24 24" fill="currentColor">
                   <path d="M19,13H13V19H11V13H5V11H11V5H13V11H19V13Z" />
                 </svg>

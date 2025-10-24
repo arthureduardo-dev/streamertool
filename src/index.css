@@ -3,8 +3,7 @@
 
 html {
   height: 100%;
-  /* Permite scroll com mouse, mas esconder a barra visualmente abaixo */
-  overflow: auto;
+  overflow: auto; /* Allow scroll if needed, hide bar below */
 }
 
 body {
@@ -12,63 +11,42 @@ body {
   margin: 0;
   padding: 0;
   font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-  background-color: #0F0F0F;
+  background-color: #0F0F0F; /* Base background */
   color: #f4f4f6;
   min-height: 100%;
-  /* Permite scroll com mouse (roda do mouse / touchpad) */
-  overflow: auto;
+  overflow: auto; /* Allow inner scroll */
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-/* Esconde visualmente a barra principal */
-/* Esconde barras de rolagem visual, mas mantém a rolagem funcional */
+/* Hide scrollbars */
 html::-webkit-scrollbar,
 body::-webkit-scrollbar,
-#root::-webkit-scrollbar {
+#root::-webkit-scrollbar,
+.main-content-scroll::-webkit-scrollbar { /* Target specific scrollable divs too */
   width: 0px;
   height: 0px;
+  display: none;
 }
 
 /* Firefox */
-html, body {
+html, body, #root, .main-content-scroll {
   scrollbar-width: none;
   -ms-overflow-style: none; /* IE/Edge */
 }
 
-/* Remove overscroll effects and disable touch highlight (helps eliminate small visual artifacts when scrolling) */
-html, body, #root {
-  overscroll-behavior: none;
-  -webkit-overflow-scrolling: auto;
-  -webkit-tap-highlight-color: transparent;
-}
-
-/* Keep focus outlines for keyboard users, but hide them for mouse/touch interactions */
-:focus:not(:focus-visible) {
-  outline: none;
-}
-
-/* Ensure scrollbar pieces (thumb/track/corner) don't show any visible line */
-::-webkit-scrollbar-thumb,
-::-webkit-scrollbar-track,
-::-webkit-scrollbar-corner {
-  background: transparent !important;
-}
-
-
+/* Basic resets */
 #root {
-  /* Use min-height para permitir que o conteúdo cresça e seja rolável */
   min-height: 100vh;
   display: flex;
   flex-direction: column;
-  /* Permite scroll interno caso conteúdo exceda a viewport */
-  overflow: auto;
+  overflow: hidden; /* Prevent #root itself from scrolling if content fits */
 }
 
 a {
   text-decoration: none;
   color: inherit;
-} /* <<< Adiciona a chave de fechamento aqui */
+}
 
 button {
   font-family: inherit;
@@ -80,4 +58,13 @@ button {
 
 *, *::before, *::after {
   box-sizing: inherit;
+}
+
+/* Focus outline management */
+:focus:not(:focus-visible) {
+  outline: none;
+}
+:focus-visible {
+  outline: 2px auto #8A5CF5; /* Example focus style */
+  outline-offset: 2px;
 }
