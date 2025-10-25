@@ -1,0 +1,236 @@
+/* src/components/TournamentDashboard/TournamentDashboard.css */
+
+.tournament-dashboard-container {
+    width: 100%;
+}
+
+/* Reutiliza o estilo do header do conteúdo principal se desejado,
+   ou crie um estilo específico para o header de torneios */
+/* .tournament-dashboard-container .content-header { ... } */
+
+.tournament-actions {
+    margin-bottom: 2rem;
+    text-align: right; /* Alinha o botão à direita */
+}
+
+.create-tournament-button {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.8rem 1.5rem;
+    background: linear-gradient(135deg, #6F42C1, #A020F0);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(111, 66, 193, 0.2);
+}
+
+.create-tournament-button svg {
+    width: 20px;
+    height: 20px;
+    fill: currentColor;
+}
+
+.create-tournament-button:hover:not(:disabled) {
+    background: linear-gradient(135deg, #A020F0, #6F42C1);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(111, 66, 193, 0.3);
+}
+
+.create-tournament-button:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+.tournament-list {
+    display: grid;
+    /* Ajusta as colunas com base no espaço, mínimo de 300px por card */
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 1.5rem;
+}
+
+.tournament-card {
+    /* Herda estilos de .dashboard-card mas permite sobrescrever */
+    background: rgba(25, 25, 40, 0.7);
+    border: 1px solid rgba(111, 66, 193, 0.25);
+    border-radius: 12px; /* Um pouco menos arredondado que o card geral */
+    padding: 1.5rem;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+    display: flex;
+    flex-direction: column; /* Organiza header, body, actions verticalmente */
+}
+
+.tournament-card:hover {
+    transform: translateY(-5px) scale(1.01); /* Efeito sutil de elevação */
+    box-shadow: 0 8px 25px rgba(111, 66, 193, 0.15);
+    border-color: rgba(160, 32, 240, 0.4);
+}
+
+.tournament-card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start; /* Alinha o status badge ao topo */
+    margin-bottom: 1rem;
+    border-bottom: 1px solid rgba(111, 66, 193, 0.1);
+    padding-bottom: 0.75rem;
+}
+
+.tournament-card-header h3 {
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: #e0e0ef;
+    margin: 0;
+    line-height: 1.3;
+    flex-grow: 1; /* Permite que o título ocupe espaço */
+    margin-right: 0.5rem; /* Espaço antes do badge */
+}
+
+.status-badge {
+    padding: 0.25rem 0.6rem;
+    border-radius: 4px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    white-space: nowrap;
+    flex-shrink: 0; /* Impede que o badge encolha */
+}
+
+/* Cores específicas para cada status */
+.status-nao-iniciado {
+    background-color: rgba(255, 165, 0, 0.2); /* Laranja */
+    color: #FFA500;
+    border: 1px solid rgba(255, 165, 0, 0.4);
+}
+.status-em-andamento {
+    background-color: rgba(60, 179, 113, 0.2); /* Verde */
+    color: #3CB371;
+    border: 1px solid rgba(60, 179, 113, 0.4);
+}
+.status-finalizado {
+    background-color: rgba(108, 122, 137, 0.2); /* Cinza */
+    color: #6C7A89;
+    border: 1px solid rgba(108, 122, 137, 0.4);
+}
+
+.tournament-card-body {
+    flex-grow: 1; /* Faz o corpo ocupar o espaço restante */
+    margin-bottom: 1rem;
+}
+
+.tournament-card-body p {
+    font-size: 0.9rem;
+    color: #a0a0b0;
+    margin: 0.3rem 0;
+    line-height: 1.5;
+}
+.tournament-card-body strong {
+    color: #c0c0d0;
+    font-weight: 600;
+}
+
+.tournament-card-actions {
+    display: flex;
+    justify-content: flex-end; /* Alinha botões à direita */
+    gap: 0.75rem;
+    margin-top: auto; /* Empurra as ações para baixo */
+    padding-top: 1rem;
+    border-top: 1px solid rgba(111, 66, 193, 0.1);
+}
+
+.tournament-card-actions button {
+    background: none;
+    border: 1px solid rgba(111, 66, 193, 0.4);
+    color: #a0a0b0;
+    padding: 0.4rem; /* Botões menores */
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    display: flex; /* Para centralizar o SVG */
+    align-items: center;
+    justify-content: center;
+}
+
+.tournament-card-actions button svg {
+    width: 18px;
+    height: 18px;
+    fill: currentColor;
+}
+
+.tournament-card-actions button:hover:not(:disabled) {
+    background-color: rgba(111, 66, 193, 0.15);
+    border-color: rgba(160, 32, 240, 0.5);
+    color: #e0e0ef;
+}
+
+.tournament-card-actions button.delete-button:hover:not(:disabled) {
+    background-color: rgba(255, 82, 82, 0.15); /* Vermelho para excluir */
+    border-color: rgba(255, 82, 82, 0.4);
+    color: #FF5252;
+}
+
+.tournament-card-actions button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+
+/* Estado Vazio */
+.empty-state {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 4rem 2rem;
+    background: rgba(25, 25, 40, 0.5);
+    border: 1px dashed rgba(111, 66, 193, 0.3);
+    border-radius: 16px;
+    color: #a0a0b0;
+    margin-top: 2rem;
+}
+
+.empty-state svg {
+    width: 60px;
+    height: 60px;
+    fill: #6F42C1;
+    opacity: 0.5;
+    margin-bottom: 1.5rem;
+}
+
+.empty-state p {
+    font-size: 1.1rem;
+    font-weight: 500;
+    margin: 0;
+}
+
+/* Indicador de Carregamento */
+.loading-indicator {
+    text-align: center;
+    padding: 1rem;
+    color: #a0a0b0;
+    font-style: italic;
+}
+
+/* Adiciona animação de entrada para os cards da lista de torneios */
+/* (Já coberto pelo useEffect geral do conditional-content em Dashboard.tsx) */
+/* .tournament-card {
+    opacity: 0;
+    transform: translateY(15px);
+    transition: opacity 0.4s ease-out, transform 0.4s ease-out;
+} */
+
+/* Responsividade adicional para a lista de torneios, se necessário */
+@media (max-width: 768px) {
+    .tournament-list {
+        grid-template-columns: 1fr; /* Garante uma coluna única */
+    }
+     .tournament-actions {
+        text-align: center; /* Centraliza botão criar no mobile */
+    }
+}

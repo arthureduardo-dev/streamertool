@@ -1,0 +1,435 @@
+/* src/components/Dashboard/Dashboard.css */
+
+/* Keyframe da animação shimmer */
+@keyframes shimmer {
+    0%, 100% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+}
+
+/* Keyframe para estrelas */
+@keyframes twinkle-stars {
+    0% { opacity: 0.6; }
+    100% { opacity: 0.9; }
+}
+
+/* Opcional: Keyframe para pulso da borda do avatar */
+@keyframes pulse-border {
+  0%, 100% { box-shadow: 0 0 10px rgba(160, 32, 240, 0.3); }
+  50% { box-shadow: 0 0 15px rgba(160, 32, 240, 0.5); }
+}
+
+.dashboard-layout {
+    display: flex;
+    min-height: 100vh;
+    position: relative; /* Para o background */
+    overflow: hidden; /* Evita barras de rolagem indesejadas */
+}
+
+/* Background Galáctico Estilizado */
+.nebula-background {
+    position: fixed;
+    top: -5%; /* Leve overflow para movimento */
+    left: -5%;
+    width: 110%; /* Leve overflow para movimento */
+    height: 110%;
+    z-index: 1;
+    background: radial-gradient(ellipse at 70% 30%, rgba(111, 66, 193, 0.2) 0%, transparent 60%), /* Nebulosa roxa */
+                radial-gradient(ellipse at 30% 70%, rgba(160, 32, 240, 0.15) 0%, transparent 50%), /* Nebulosa magenta */
+                radial-gradient(ellipse at 50% 50%, rgba(60, 20, 100, 0.1) 0%, transparent 70%); /* Fundo mais escuro */
+    transition: transform 0.1s linear; /* Transição suave para parallax */
+}
+
+/* Camada de estrelas */
+.stars-layer {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: transparent;
+    box-shadow:
+        100px 200px 1px #fff, 300px 50px 1px #fff, 500px 400px 0px #fff,
+        800px 150px 1px #ccc, 150px 600px 1px #ccc, 900px 550px 0px #aaa,
+        50px 50px 0px #eee, 250px 350px 1px #ddd, 450px 100px 1px #fff,
+        650px 500px 0px #ccc, 750px 300px 1px #eee, 950px 100px 1px #ddd;
+    animation: twinkle-stars 10s ease-in-out infinite alternate;
+}
+
+/* Camada de poeira cósmica */
+.dust-layer {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><filter id="noise"><feTurbulence type="fractalNoise" baseFrequency="0.8" numOctaves="4" stitchTiles="stitch"/></filter><rect width="100%" height="100%" filter="url(%23noise)" opacity="0.03"/></svg>');
+    opacity: 0.5;
+}
+
+/* Sidebar */
+.sidebar {
+    width: 260px;
+    background: rgba(18, 18, 28, 0.85);
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+    border-right: 1px solid rgba(111, 66, 193, 0.2);
+    display: flex;
+    flex-direction: column;
+    padding: 1.5rem 1rem;
+    position: relative;
+    z-index: 10;
+    transition: transform 0.3s ease;
+}
+
+/* Estilos ATUALIZADOS para o Header da Sidebar com Perfil */
+.sidebar-header.profile-header {
+    display: flex;
+    align-items: center;
+    gap: 0.875rem;
+    padding: 0.5rem; /* Padding interno para o hover */
+    margin: 0 -0.5rem 1.5rem -0.5rem; /* Ajusta margem para compensar padding */
+    border-bottom: 1px solid rgba(111, 66, 193, 0.1);
+    border-radius: 8px; /* Arredonda a área */
+    transition: background-color 0.3s ease;
+    cursor: default; /* Ou 'pointer' se for clicável */
+}
+
+.sidebar-header.profile-header:hover {
+    background-color: rgba(255, 255, 255, 0.03); /* Fundo sutil no hover */
+}
+
+/* Estilos ATUALIZADOS para o Container do Avatar */
+.profile-avatar-container {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    overflow: hidden;
+    background-color: #333;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    /* Borda com Gradiente */
+    border: 2px solid transparent;
+    background-image: linear-gradient(rgba(18, 18, 28, 0.85), rgba(18, 18, 28, 0.85)),
+                      linear-gradient(135deg, #A020F0, #6F42C1, #8A5CF5);
+    background-origin: border-box;
+    background-clip: content-box, border-box;
+    box-shadow: 0 0 10px rgba(160, 32, 240, 0.3); /* Glow suave */
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    /* animation: pulse-border 3s infinite ease-in-out; */ /* Descomente para animação de pulso */
+}
+
+.profile-avatar-container:hover {
+    transform: scale(1.05); /* Aumenta um pouco no hover */
+    box-shadow: 0 0 18px rgba(160, 32, 240, 0.5); /* Glow mais intenso no hover */
+}
+
+
+.profile-avatar {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.profile-avatar-placeholder {
+    width: 60%;
+    height: 60%;
+    color: #888;
+}
+
+.profile-avatar-placeholder svg {
+    width: 100%;
+    height: 100%;
+}
+
+/* Estilos ATUALIZADOS para o Nickname */
+.profile-nickname {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #e8e8f0; /* Branco ligeiramente mais suave */
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    flex-grow: 1;
+    text-shadow: 0 0 8px rgba(200, 180, 255, 0.2); /* Sombra de texto sutil */
+    transition: color 0.3s ease, text-shadow 0.3s ease;
+}
+
+.sidebar-header.profile-header:hover .profile-nickname {
+    color: #ffffff; /* Fica branco puro no hover da área */
+    text-shadow: 0 0 12px rgba(200, 180, 255, 0.3);
+}
+
+
+/* Navegação da Sidebar */
+.sidebar-nav {
+    flex-grow: 1;
+    margin-top: 0.5rem; /* Pequeno ajuste de espaço após o header */
+}
+
+.sidebar-nav ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.nav-item a {
+    display: flex;
+    align-items: center;
+    gap: 0.875rem;
+    padding: 0.875rem 1rem;
+    border-radius: 8px;
+    color: #a0a0b0;
+    text-decoration: none;
+    font-weight: 500;
+    margin-bottom: 0.5rem;
+    transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.nav-item a svg {
+    width: 20px;
+    height: 20px;
+    fill: currentColor;
+    opacity: 0.8;
+    flex-shrink: 0;
+}
+
+.nav-item a:hover {
+    background-color: rgba(111, 66, 193, 0.1);
+    color: #e0e0ef;
+}
+
+/* Item Ativo com Animação Shimmer */
+.nav-item.active a {
+    background: linear-gradient(135deg, #6F42C1 0%, #A020F0 50%, #8A5CF5 100%);
+    background-size: 200% auto;
+    color: #ffffff;
+    font-weight: 600;
+    box-shadow: none;
+    animation: shimmer 3s linear infinite;
+    display: flex;
+    align-items: center;
+    gap: 0.875rem;
+    padding: 0.875rem 1rem;
+    border-radius: 8px;
+    margin-bottom: 0.5rem;
+    transition: none;
+}
+
+.nav-item.active a svg {
+    fill: #ffffff;
+    opacity: 1;
+}
+
+.nav-item.active a:hover {
+    background: linear-gradient(135deg, #6F42C1 0%, #A020F0 50%, #8A5CF5 100%);
+    background-size: 200% auto;
+    color: #ffffff;
+    animation: shimmer 3s linear infinite;
+    /* filter: brightness(1.1); */
+}
+
+.sidebar-footer {
+    margin-top: auto;
+    padding-top: 1rem;
+    border-top: 1px solid rgba(111, 66, 193, 0.1);
+    text-align: center;
+    font-size: 0.8rem;
+    color: #606070;
+}
+
+/* Área de Conteúdo Principal */
+.main-content-area {
+    flex-grow: 1;
+    padding: 3rem 4rem;
+    position: relative;
+    z-index: 5;
+    overflow-y: auto;
+    color: #e0e0ef;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+}
+
+.main-content-area::-webkit-scrollbar {
+    display: none;
+}
+
+
+.content-header {
+    margin-bottom: 3rem;
+}
+
+/* Título Principal com Animação Shimmer */
+.dashboard-title {
+    font-size: 2.8rem;
+    font-weight: 800;
+    margin: 0 0 0.75rem 0;
+    line-height: 1.2;
+    letter-spacing: -0.02em;
+    display: inline-block;
+    background: linear-gradient(135deg, #f0f0f5 20%, #A020F0 50%, #8A5CF5 80%);
+    background-size: 250% auto;
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: shimmer 4s linear infinite;
+    text-shadow: 0 2px 15px rgba(111, 66, 193, 0.2);
+}
+
+
+.content-header p {
+    font-size: 1.125rem;
+    color: #a0a0b0;
+    margin: 0;
+}
+
+/* Grid do Dashboard */
+.dashboard-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 2rem;
+}
+
+.dashboard-card {
+    background: rgba(25, 25, 40, 0.7);
+    border: 1px solid rgba(111, 66, 193, 0.25);
+    border-radius: 16px;
+    padding: 2rem;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+}
+
+.dashboard-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 30px rgba(111, 66, 193, 0.2);
+    border-color: rgba(160, 32, 240, 0.4);
+}
+
+.dashboard-card h2 {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #e0e0ef;
+    margin: 0 0 1rem 0;
+    border-bottom: 1px solid rgba(111, 66, 193, 0.15);
+    padding-bottom: 0.75rem;
+}
+
+.dashboard-card p {
+    color: #a0a0b0;
+    font-size: 1rem;
+    line-height: 1.6;
+}
+
+/* Responsividade */
+@media (max-width: 1024px) {
+    .sidebar {
+        width: 220px;
+        padding: 1rem 0.75rem;
+    }
+    .main-content-area {
+        padding: 2rem;
+    }
+    .dashboard-title {
+        font-size: 2.2rem;
+    }
+    .content-header p {
+        font-size: 1.05rem;
+    }
+    .dashboard-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 768px) {
+    .dashboard-layout {
+        flex-direction: column;
+    }
+    .sidebar {
+        width: 100%;
+        height: auto;
+        border-right: none;
+        border-bottom: 1px solid rgba(111, 66, 193, 0.2);
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+        padding: 0.5rem 1rem;
+    }
+
+    .sidebar-header.profile-header {
+        padding: 0;
+        border-bottom: none;
+        margin-bottom: 0;
+        flex-grow: 0;
+        margin-right: auto;
+        border-radius: 0; /* Remove borda arredondada no mobile */
+        background-color: transparent !important; /* Remove fundo no hover */
+    }
+    .sidebar-header.profile-header:hover {
+        background-color: transparent;
+    }
+    .profile-nickname { display: none; }
+    .profile-avatar-container {
+        width: 32px;
+        height: 32px;
+        border-width: 1px;
+        box-shadow: 0 0 6px rgba(160, 32, 240, 0.2); /* Reduz glow */
+        /* animation: none; */ /* Remove animação de pulso se estiver ativa */
+    }
+     .profile-avatar-container:hover {
+        transform: none; /* Remove zoom no hover */
+        box-shadow: 0 0 8px rgba(160, 32, 240, 0.3);
+    }
+
+
+    .sidebar-nav {
+        flex-grow: 0;
+        margin-left: 1rem;
+    }
+    .sidebar-nav ul { display: flex; gap: 0.5rem; }
+    .nav-item a {
+        padding: 0.5rem;
+        margin-bottom: 0;
+        background: transparent !important;
+        animation: none !important;
+        border-radius: 50%;
+        line-height: 0;
+    }
+    .nav-item a span { display: none; }
+    .nav-item a svg { width: 22px; height: 22px; margin: 0; }
+
+    .nav-item.active a {
+        background: rgba(111, 66, 193, 0.25) !important;
+        animation: none !important;
+        color: #fff !important;
+    }
+     .nav-item a:hover {
+        background-color: rgba(111, 66, 193, 0.15) !important;
+        color: #e0e0ef;
+     }
+     .nav-item.active a:hover {
+         background-color: rgba(111, 66, 193, 0.3) !important;
+     }
+
+    .sidebar-footer { display: none; }
+
+    .main-content-area { padding: 1.5rem; }
+    .dashboard-title {
+        font-size: 1.9rem;
+        text-align: center;
+        display: block;
+        margin-bottom: 0.5rem;
+        /* Considerar remover ou simplificar a animação no mobile se pesar */
+        /* background-size: 200% auto; */
+        /* animation-duration: 5s; */
+    }
+    .content-header p {
+        text-align: center;
+        font-size: 1rem;
+    }
+    .dashboard-card { padding: 1.5rem; }
+}
+
+/* Garante que o span dentro dos links da nav não seja escondido em telas maiores */
+@media (min-width: 769px) {
+    .nav-item a span {
+        display: inline;
+    }
+}
